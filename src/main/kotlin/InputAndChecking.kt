@@ -11,7 +11,7 @@ class InputAndChecking {
                 outInt = input.toInt()
                 return outInt
             } else {
-                println("Вы ввели буквенное значение, введите цифру")
+                println("Вы ввели буквенное значение, введите цифру:\n=======================")
                 inputInt()
             }
             return outInt

@@ -8,12 +8,13 @@ open class Screen {
             println("=======================\nМеню: \n0.Выход \n1.Создать архив \n2.Мои архивы" +
                     "\n=======================")
             when (InputAndChecking.inputInt()) {
-                1 -> {Creation.createArchive()}
-                2 -> archivesScreen()
                 0 -> { println("Программа завершила свою работу")
                     exitProcess(1) }
-
-                else -> println("Введите правильную команду")
+                1 -> {Creation.createArchive()}
+                2 -> archivesScreen()
+                else -> {println("Введите правильную команду")
+                mainScreen()
+                }
             }
         }
         private fun archivesScreen() {  //Экран выбора архивов
@@ -39,7 +40,6 @@ open class Screen {
                 }
             }
         private fun listNotesScreen(indexArchive: Int) {
-            println("Список заметок архива '${Archives.archives[indexArchive].name}': ")
             Archives.viewNoteList(indexArchive)
             println("\nВыберите заметку или введите 'Выход' для выхода")
             var input = InputAndChecking.isInt(inputString())
