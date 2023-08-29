@@ -11,19 +11,24 @@ class InputAndChecking {
                 outInt = input.toInt()
                 return outInt
             } else {
-                println("Введите цифру меню")
+                println("Вы ввели буквенное значение, введите цифру")
                 inputInt()
             }
             return outInt
         }
 
 
-        fun inputString(): String {                         //Ввод текста
-            return scanner.nextLine()
-        }
+        fun inputString(): String {              //Внесение данных с проверкой пустого значения
+            var scan: String = scanner.nextLine()
+            while(scan.equals("")) {
+                println("Введена пустая строка, введите имя:\n=======================")
+                scan = scanner.nextLine()
+            }
+             return scan
+            }
 
 
-        fun checkInt(s: String): Boolean {                   //Проверяет введены ли цифры
+        private fun checkInt(s: String): Boolean {                   //Проверяет введены ли цифры
             return try {
                 s.toInt()
                 true

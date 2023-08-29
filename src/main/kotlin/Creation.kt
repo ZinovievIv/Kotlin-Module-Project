@@ -12,6 +12,9 @@ class Creation {
         fun createNote(): Note {                  //Создаем заметку
             println("Введите название заметки")
             val nameNote = InputAndChecking.inputString()
+            if(nameNote.isEmpty()) {
+                println("Введена пустая строка")
+            }
             println("Текст заметки")
             val textNote = InputAndChecking.inputString()
             return Note(nameNote, textNote)

@@ -5,12 +5,12 @@ import kotlin.system.exitProcess
 open class Screen {
     companion object {
         fun mainScreen() {     // Основное меню после запуска программы
-            println("=======================\nМеню: \n1.Создать архив \n2.Мои архивы \n3.Выход" +
+            println("=======================\nМеню: \n0.Выход \n1.Создать архив \n2.Мои архивы" +
                     "\n=======================")
             when (InputAndChecking.inputInt()) {
                 1 -> {Creation.createArchive()}
                 2 -> archivesScreen()
-                3 -> { println("Программа завершила свою работу")
+                0 -> { println("Программа завершила свою работу")
                     exitProcess(1) }
 
                 else -> println("Введите правильную команду")
@@ -18,7 +18,7 @@ open class Screen {
         }
         private fun archivesScreen() {  //Экран выбора архивов
             Archives.viewArchivesList()
-            println("\nВыберите архив или введите 'Выход' для перехода в предыдущее меню")
+            println("\nВыберите архив или введите '0' для перехода в предыдущее меню")
             val input = InputAndChecking.isInt(inputString())
             if (input is Int) {
                 if (input > Archives.archives.size) {
@@ -26,25 +26,21 @@ open class Screen {
                     println("Неверный номер архива")
                     println("=======================")
                     archivesScreen()
-                } else {
-                    menuInArchiveScreen(input)
-                }
-            } else {
-                if (input.toString().lowercase() == "выход") {
+                } else if (input == 0) {
                     mainScreen()
                 } else {
+                    menuInArchiveScreen(input - 1)
+                }
+            } else {
                     println("=======================")
-                    println("Неправильный ввод")
+                    println("Вы ввели буквенное значение, введите цифру")
                     println("=======================")
                     archivesScreen()
                 }
             }
-        }
         private fun listNotesScreen(indexArchive: Int) {
             println("Список заметок архива '${Archives.archives[indexArchive].name}': ")
-            for (i in Archives.archives[indexArchive].noteList.indices) {
-                println("${i}.${Archives.archives[indexArchive].noteList[i].header}")
-            }
+            Archives.viewNoteList(indexArchive)
             println("\nВыберите заметку или введите 'Выход' для выхода")
             var input = InputAndChecking.isInt(inputString())
             if (input is Int) {
@@ -65,12 +61,12 @@ open class Screen {
         fun menuInArchiveScreen(indexArchive: Int) {
             println("=======================\nМеню заметок архива: " +
                     "'${Archives.archives[indexArchive].name}'" +
-                    " \n1.Создать заметку \n2.Посмотреть заметки " +
-                    "\n3.Выход\n=======================\n")
+                    " \n0.Выход \n1.Создать заметку " +
+                    "\n2.Посмотреть заметки\n=======================\n")
             when (InputAndChecking.inputInt()) {
                 1 -> Archives.archives[indexArchive].noteList.add(Creation.createNote())
                 2 -> listNotesScreen(indexArchive)
-                3 -> archivesScreen()
+                0 -> archivesScreen()
             }
             menuInArchiveScreen(indexArchive)
         }
